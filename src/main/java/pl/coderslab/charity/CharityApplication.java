@@ -17,4 +17,5 @@ public class CharityApplication {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper;
     }
+
 }
