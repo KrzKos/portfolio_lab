@@ -10,5 +10,6 @@ public interface CategoryService {
     void update(CategoryDTO categoryDTO);
     List<CategoryDTO> findAllCategories();
     CategoryDTO findById(long id);
+    CategoryDTO findByName(String name);
     void delete(CategoryDTO categoryDTO);
 }

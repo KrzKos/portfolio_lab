@@ -38,4 +38,14 @@ public class DefaultDonationService implements DonationService {
         donationRepository.save(donation);
 
     }
+
+    @Override
+    public Integer sumAllQuantity() {
+        return donationRepository.sumQuantity();
+    }
+
+    @Override
+    public Integer countDonation() {
+        return donationRepository.countDonation();
+    }
 }

@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter @Setter @EqualsAndHashCode(of = "id")
 @ToString
-@Entity
 @NoArgsConstructor @AllArgsConstructor
 public class BaseEntity {
 
