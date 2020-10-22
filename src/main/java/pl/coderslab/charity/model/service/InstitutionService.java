@@ -1,6 +1,8 @@
 package pl.coderslab.charity.model.service;
 
 import pl.coderslab.charity.model.dto.InstitutionDTO;
+import pl.coderslab.charity.model.entity.Institution;
+
 import java.util.List;
 
 public interface InstitutionService {
