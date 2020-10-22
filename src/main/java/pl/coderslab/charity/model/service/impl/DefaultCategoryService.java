@@ -20,7 +20,8 @@ public class DefaultCategoryService implements CategoryService {
 
     @Override
     public void create(CategoryDTO categoryDTO) {
-        Category category = modelMapper.map(categoryDTO, Category.class);
+        Category category = new Category();
+        category.setName(categoryDTO.getName());
         categoryRepository.save(category);
     }
 
