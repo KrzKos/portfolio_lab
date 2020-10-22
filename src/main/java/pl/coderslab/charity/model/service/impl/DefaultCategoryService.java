@@ -2,7 +2,6 @@ package pl.coderslab.charity.model.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.model.dto.CategoryDTO;
 import pl.coderslab.charity.model.entity.Category;
@@ -26,10 +25,10 @@ public class DefaultCategoryService implements CategoryService {
     private ModelMapper modelMapper;
 */
     @Override
-    public void create(CategoryDTO categoryDTO) {
+    public Category create(CategoryDTO categoryDTO) {
         Category category = modelMapper.map(categoryDTO, Category.class);
         category.setName(categoryDTO.getName());
-        categoryRepository.save(category);
+        return categoryRepository.save(category);
     }
 
     @Override

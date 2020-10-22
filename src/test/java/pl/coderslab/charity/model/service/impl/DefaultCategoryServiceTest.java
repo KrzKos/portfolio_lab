@@ -21,8 +21,7 @@ import pl.coderslab.charity.model.service.CategoryService;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,7 +33,7 @@ public class DefaultCategoryServiceTest {
     @Mock
     private ModelMapper modelMapper;
 
-    @Test
+    /*@Test
     public void givenNewCategory_whenSave_ThenCategoryIsSaved() {
         String name = "Kat1";
         Category category = new Category();
@@ -47,7 +46,25 @@ public class DefaultCategoryServiceTest {
 
         assertEquals(category.getName(), categoryDTO.getName());
 
+    }
+    */
+    @Test
+    public void givenNewCategory_whenSave_ThenCategoryIsReturnedCorrectly() {
+        //given
+        String name = "KAt2";
+        Category category = new Category();
+        category.setId(1L);
+        category.setName(name);
 
+        CategoryDTO categoryDTO = new CategoryDTO(1L, name);
+
+        when(categoryRepository.save(category)).thenReturn(category);
+        when(modelMapper.map(categoryDTO, Category.class)).thenReturn(category);
+        //when
+        Category result = categoryService.create(categoryDTO);
+        //then
+        assertNotNull(result);
+        assertEquals(category.getName(),result.getName());
 
 
 
