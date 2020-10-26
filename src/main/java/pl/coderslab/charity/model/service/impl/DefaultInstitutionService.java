@@ -22,6 +22,7 @@ public class DefaultInstitutionService implements InstitutionService {
     @Override
     public void create(InstitutionDTO institutionDTO) {
         Institution institution = modelMapper.map(institutionDTO,Institution.class);
+        institution.setName("Jan");
         institutionRepository.save(institution);
     }
 
@@ -34,7 +35,8 @@ public class DefaultInstitutionService implements InstitutionService {
     @Override
     public InstitutionDTO findById(long id) {
         Optional<Institution> institutionRepositoryById = institutionRepository.findById(id);
-        return institutionRepositoryById.map(institution -> modelMapper.map(institution, InstitutionDTO.class)).orElse(null);
+        return institutionRepositoryById.map(institution -> modelMapper.map(institution, InstitutionDTO.class)).
+                orElseThrow(() -> new RuntimeException("Not found"));
     }
 
     @Override

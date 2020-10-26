@@ -15,6 +15,7 @@ public class DonationAddDTO {
     private List<Category> categories;
     private Long institutionId;
     private String street;
+    private String city;
     private String zipCode;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate pickUpDate;

@@ -22,6 +22,7 @@ public class Donation extends BaseEntity{
     @OneToOne
     private Institution institution;
     private String street;
+    private String city;
     @Column(name = "zip_code")
     private String zipCode;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

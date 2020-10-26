@@ -1,42 +1,107 @@
 package pl.coderslab.charity.model.service.impl;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import pl.coderslab.charity.model.dto.InstitutionDTO;
 import pl.coderslab.charity.model.entity.Institution;
 import pl.coderslab.charity.model.repository.InstitutionRepository;
+import pl.coderslab.charity.model.service.InstitutionService;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.Optional;
 
-@RunWith(MockitoJUnitRunner.class)
+@DisplayName("Default Institution Service Specification")
 public class DefaultInstitutionServiceTest {
-    @InjectMocks
-    private DefaultInstitutionService institutionService;
-    @Mock
-    private InstitutionRepository institutionRepository;
-    @Mock
-    private ModelMapper modelMapper;
 
-    @Test
-    public void givenNewInstitution_whenSave_thenReturnInstitution() {
-        //given
-        Institution institution = new Institution();
-        institution.setId(1L);
-        institution.setName("Instytucja");
+    InstitutionRepository institutionRepository;
+    InstitutionService institutionService;
 
-        InstitutionDTO institutionDTO = modelMapper.map(institution, InstitutionDTO.class);
+    @BeforeEach
+    void setUp() {
+        institutionRepository = Mockito.mock(InstitutionRepository.class);
+        ModelMapper modelMapper = new ModelMapper();
+        institutionService = new DefaultInstitutionService(modelMapper, institutionRepository);
+    }
 
-        when(institutionRepository.save(institution)).thenReturn(institution);
-        verify(institutionService).create(institutionDTO);
+    @DisplayName("Create New Institution")
+    @Nested
+    class CreateNewInstitution {
 
-        assertNotNull(institutionDTO);
+        InstitutionDTO institutionToCreate;
+        Institution institutionCreated;
+
+        @BeforeEach
+        void setUp() {
+            institutionToCreate = new InstitutionDTO();
+            institutionToCreate.setName("test-name");
+
+            institutionCreated = new Institution();
+            institutionCreated.setId(1L);
+            institutionCreated.setName(institutionToCreate.getName());
+        }
+
+        @DisplayName(" - should save using repository")
+        @Test
+        public void test1() {
+            Mockito.when(institutionRepository.save(ArgumentMatchers.any())).thenReturn(institutionCreated);
+
+            institutionService.create(institutionToCreate);
+
+            Mockito.verify(institutionRepository, Mockito.atLeastOnce()).save(ArgumentMatchers.any());
+        }
+
+        @DisplayName(" - should save given name")
+        @Test
+        public void test2() {
+            Mockito.when(institutionRepository.save(institutionCreated)).thenReturn(institutionCreated);
+
+            institutionService.create(institutionToCreate);
+
+            Assertions.assertEquals("test-name", institutionToCreate.getName());
+        }
+    }
+
+    @DisplayName("Find institution by")
+    @Nested
+    class FindInstitutionById {
+        Institution institutionFound;
+        InstitutionDTO institutionToFind;
+
+        @BeforeEach
+        void setUp() {
+            institutionFound = new Institution();
+            institutionFound.setId(1L);
+            institutionFound.setName("Instytucja");
+            institutionFound.setDescription("desc");
+
+            institutionToFind = new InstitutionDTO();
+            institutionToFind.setId(institutionFound.getId());
+            institutionToFind.setName(institutionFound.getName());
+
+        }
+
+        @DisplayName(" name - should find institution by given any name")
+        @Test
+        public void test1() {
+            Mockito.when(institutionRepository.findByName(Mockito.anyString())).thenReturn(institutionFound);
+
+            InstitutionDTO result = institutionService.findByName(institutionToFind.getName());
+
+            Assertions.assertNotNull(result);
+        }
+
+        @DisplayName(" id - should find institution by given id")
+        @Test
+        public void test() {
+            Mockito.when(institutionRepository.findById(ArgumentMatchers.isNull())).thenThrow(new RuntimeException("Not founld"));
+
+            institutionService.findById(1L);
+
+            org.assertj.core.api.Assertions.shouldHaveThrown(RuntimeException.class);
+
+
+        }
 
     }
 
