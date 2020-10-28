@@ -1,6 +1,7 @@
 package pl.coderslab.charity.model.service.impl;
 
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
@@ -54,11 +55,12 @@ public class DefaultInstitutionServiceTest {
         @DisplayName(" - should save given name")
         @Test
         public void test2() {
-            Mockito.when(institutionRepository.save(institutionCreated)).thenReturn(institutionCreated);
+            ArgumentCaptor<Institution> inst = ArgumentCaptor.forClass(Institution.class);
+            Mockito.when(institutionRepository.save(inst.capture())).thenReturn(institutionCreated);
 
             institutionService.create(institutionToCreate);
-
-            Assertions.assertEquals("test-name", institutionToCreate.getName());
+            Institution value = inst.getValue();
+            Assertions.assertEquals(institutionCreated, value);
         }
     }
 
@@ -92,15 +94,33 @@ public class DefaultInstitutionServiceTest {
         }
 
         @DisplayName(" id - should find institution by given id")
-        @Test
+        @Disabled
         public void test() {
-            Mockito.when(institutionRepository.findById(ArgumentMatchers.isNull())).thenThrow(new RuntimeException("Not founld"));
+            Mockito.when(institutionRepository.findById(1L)).thenReturn(Optional.of(institutionFound));
 
-            institutionService.findById(1L);
+            InstitutionDTO result = institutionService.findById(1L);
 
-            org.assertj.core.api.Assertions.shouldHaveThrown(RuntimeException.class);
+            Assertions.assertEquals(institutionFound.getId(),result.getId());
+        }
 
 
+    }
+    @DisplayName("Delete institution")
+    @Nested
+
+    class DeleteInstitution {
+        InstitutionDTO institutionToDelete;
+        Institution institutionDeleted;
+
+        @BeforeEach
+        void setUp() {
+            institutionToDelete = new InstitutionDTO();
+            institutionToDelete.setId(1L);
+            institutionToDelete.setName("institution1");
+
+            institutionDeleted = new Institution();
+            institutionDeleted.setId(institutionToDelete.getId());
+            institutionDeleted.setName(institutionDeleted.getName());
         }
 
     }
