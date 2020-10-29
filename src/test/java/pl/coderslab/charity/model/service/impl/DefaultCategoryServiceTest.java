@@ -9,9 +9,16 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import pl.coderslab.charity.model.dto.CategoryDTO;
 import pl.coderslab.charity.model.entity.Category;
 import pl.coderslab.charity.model.repository.CategoryRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @DisplayName("Default Category Service Specification")
 public class DefaultCategoryServiceTest {

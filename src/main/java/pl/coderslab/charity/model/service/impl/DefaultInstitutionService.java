@@ -23,6 +23,7 @@ public class DefaultInstitutionService implements InstitutionService {
     public void create(InstitutionDTO institutionDTO) {
         Institution institution = modelMapper.map(institutionDTO,Institution.class);
         institutionRepository.save(institution);
+        institutionDTO.setId(institution.getId());
     }
 
     @Override
