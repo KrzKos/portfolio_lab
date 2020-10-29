@@ -21,10 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
-                .and().formLogin().defaultSuccessUrl("/user");
+                .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/donation");
     }
 
     @Override

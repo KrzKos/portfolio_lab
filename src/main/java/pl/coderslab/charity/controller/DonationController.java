@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.model.dto.CategoryDTO;
 import pl.coderslab.charity.model.dto.DonationAddDTO;
 import pl.coderslab.charity.model.dto.InstitutionDTO;
-import pl.coderslab.charity.model.entity.Institution;
 import pl.coderslab.charity.model.service.CategoryService;
 import pl.coderslab.charity.model.service.DonationService;
 import pl.coderslab.charity.model.service.InstitutionService;
