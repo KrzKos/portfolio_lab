@@ -1,8 +1,10 @@
 package pl.coderslab.charity.controller.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.exeption.NotFoundException;
 import pl.coderslab.charity.model.dto.InstitutionDTO;
@@ -24,7 +26,10 @@ public class InstitutionApiController {
     }
 
     @PostMapping
-    public ResponseEntity saveInstitution(@Valid @RequestBody InstitutionDTO institution) {
+    public ResponseEntity saveInstitution(@Valid @RequestBody InstitutionDTO institution, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(ResponseErrors.of(result));
+        }
         institutionService.create(institution);
         return ResponseEntity.created(URI.create("/api/institution/" + institution.getId())).build();
     }

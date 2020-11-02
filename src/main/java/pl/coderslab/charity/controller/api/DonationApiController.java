@@ -38,6 +38,10 @@ public class DonationApiController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteDonation(@PathVariable long id, )
+    public ResponseEntity deleteDonation(@PathVariable long id) {
+        DonationDTO donation = donationService.findById(id);
+        donationService.delete(donation);
+        return ResponseEntity.ok().build();
+    }
 
 }
