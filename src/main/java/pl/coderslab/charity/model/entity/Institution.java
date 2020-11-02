@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "institution")
 public class Institution extends BaseEntity{
-    @Column(nullable = false)
     private String name;
     private String description;
 }

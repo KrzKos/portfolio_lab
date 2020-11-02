@@ -19,8 +19,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN", "USER")
                 .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/donation");

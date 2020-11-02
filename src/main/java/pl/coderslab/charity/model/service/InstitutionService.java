@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InstitutionService {
 
-    void create(InstitutionDTO institutionDTO);
+    InstitutionDTO create(InstitutionDTO institutionDTO);
     InstitutionDTO findById(long id);
     InstitutionDTO findByName(String name);
     List<InstitutionDTO> findAll();
