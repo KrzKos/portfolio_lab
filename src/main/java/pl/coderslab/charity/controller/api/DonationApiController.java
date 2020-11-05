@@ -37,7 +37,9 @@ public class DonationApiController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteDonation(@PathVariable long id, )
+ /*   @DeleteMapping("/{id}")
+    public ResponseEntity deleteDonation(@PathVariable long id){
+        return;
+    }*/
 
 }
