@@ -13,4 +13,6 @@ public interface DonationService {
     List<DonationDTO> findAll();
     DonationDTO findById(long id);
     void delete(DonationDTO donationDTO);
+
+    void update(DonationAddDTO donationAddDTO);
 }

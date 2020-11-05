@@ -79,4 +79,12 @@ public class DefaultDonationService implements DonationService {
             throw new NotFoundException(donationDTO.getId());
         }
     }
+
+    @Override
+    public void update(DonationAddDTO donationAddDTO) {
+
+        Donation donation = modelMapper.map(donationAddDTO,Donation.class);
+        donationRepository.save(donation);
+
+    }
 }
